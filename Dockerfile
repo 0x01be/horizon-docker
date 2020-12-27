@@ -17,7 +17,8 @@ RUN apk add --no-cache --virtual horizon-runtime-dependencies \
     libgit2 \
     curl \
     podofo \
-    libzip &&\
+    libzip \
+    mesa-dri-swrast &&\
     apk add --no-cache --virtual horizon-edge-runtime-dependencies \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
