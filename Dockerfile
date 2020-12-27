@@ -2,7 +2,7 @@ FROM 0x01be/horizon:build as build
 
 FROM 0x01be/xpra
 
-COPY --from=build /horizon/horizon-eda /opt/horizon/bin/
+COPY --from=build /horizon/build/horizon-* /opt/horizon/bin/
 
 RUN apk add --no-cache --virtual horizon-runtime-dependencies \
     util-linux \
