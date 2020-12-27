@@ -6,6 +6,7 @@ RUN apk add --no-cache --virtual horizon-build-dependencies \
     git \
     build-base \
     util-linux \
+    binutils-gold \
     gtkmm3-dev \
     cairomm-dev \
     librsvg-dev \
