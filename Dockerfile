@@ -1,29 +1,31 @@
-FROM 0x01be/base
+FROM 0x01be/horizon:build as build
 
-WORKDIR /horizon
-ENV REVISION=master
-RUN apk add --no-cache --virtual horizon-build-dependencies \
-    git \
-    build-base \
+FROM 0x01be/xpra
+
+COPY --from=build /horizon/horizon-eda /opt/horizon/bin/
+
+RUN apk add --no-cache --virtual horizon-runtime-dependencies \
     util-linux \
-    gtkmm3-dev \
-    cairomm-dev \
-    librsvg-dev \
-    yaml-cpp-dev \
-    sqlite-dev \
-    boost-dev \
-    zeromq-dev \
-    glm-dev \
-    libgit2-dev \
-    curl-dev \
-    podofo-dev \
-    libzip-dev &&\
-    apk add --no-cache --virtual horizon-edge-dependencies \
+    gtkmm3 \
+    cairomm \
+    librsvg \
+    yaml-cpp \
+    sqlite \
+    boost \
+    zeromq \
+    glm \
+    libgit2 \
+    curl \
+    podofo \
+    libzip &&\
+    apk add --no-cache --virtual horizon-edge-runtime-dependencies \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-    opencascade-dev \
-    cppzmq &&\
-    git clone --depth 1 --branch ${REVISION} https://github.com/horizon-eda/horizon.git /horizon &&\
-    make
+    opencascade \
+    cppzmq
+
+USER ${USER}
+ENV PATH=${PATH}:/opt/horizon/bin \
+    COMMAND=horizon-eda
 
